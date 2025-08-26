@@ -2,7 +2,7 @@
 
 DESCRIPTION...
 
-> 🔗 Repository: [github.com/Arealtime/file-uploader](https://github.com/Arealtime/file-uploader)
+> 🔗 Repository: [github.com/TaskioApp/file-uploader](https://github.com/TaskioApp/file-uploader)
 
 ---
 
@@ -23,11 +23,11 @@ In your Laravel project's `composer.json`, add the following:
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/Arealtime/file-uploader"
+        "url": "https://github.com/TaskioApp/file-uploader"
     }
 ]
 "require": {
-    "arealtime/file-uploader": "*"
+    "taskio/file-uploader": "*"
 }
 ```
 
@@ -54,7 +54,7 @@ DESCRIPTION...
 
 ## 📄 License
 
-MIT © Arealtime
+MIT © Taskio
 
 ---
 

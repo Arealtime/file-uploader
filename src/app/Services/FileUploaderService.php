@@ -1,22 +1,17 @@
 <?php
 
-namespace Arealtime\FileUploader\App\Services;
+namespace Taskio\FileUploader\Services;
 
-use Carbon\Carbon;
+use Taskio\FileUploader\Traits\FileUploaderAction;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
-class FileUploadService
+class FileUploaderService
 {
+    use FileUploaderAction;
 
-    private string $disk;
-    private string $basePath;
-    private string $folder;
-    private string $filePath;
-
-    private ?string $extension = null;
-    private int $size = 0;
-    private ?string $mimeType = null;
+    private string $disk = 'public';
+    private string $folder = 'uploads';
 
     /**
      * Set disk property.
@@ -26,7 +21,7 @@ class FileUploadService
      */
     public function setDisk(string $disk): self
     {
-        $this->disk = $disk ?? 'public';
+        $this->disk = $disk;
 
         return $this;
     }
@@ -39,49 +34,34 @@ class FileUploadService
      */
     public function setFolder(string $folder): self
     {
-        $this->folder = $folder ?? 'uploads';
+        $this->folder = $folder;
 
         return $this;
     }
 
-
-    /**
-     * Set basePath property.
-     *
-     * @param string $basePath
-     * @return $this
-     */
-    public function setBasePath(string $basePath): self
-    {
-        $this->basePath = $basePath ?: Carbon::now()->format('Y-m-d');
-
-        return $this;
-    }
-
-    /**
-     * Set filePath property.
-     *
-     * @param string $filePath
-     * @return $this
-     */
-    public function setFilePath(string $filePath): self
-    {
-        $this->filePath = $filePath;
-
-        return $this;
-    }
 
     /**
      * Upload a file to disk and return its stored path.
      *
      * @param UploadedFile $file
-     * @return string // The path that should be stored in DB
      */
-    public function upload(UploadedFile $file): string
+    public function upload(UploadedFile $file): object
     {
-        $path = $file->store($this->folder, $this->disk);
+        $folder = $this->folder;
 
-        return $path;
+        if ($this->isDatePathEnabled) {
+            $folder = $this->generateDatePath();
+        }
+
+        $path = $file->store($folder, $this->disk);
+
+        return  (object)[
+            'path' => $path,
+            'original_name' => $file->getClientOriginalName(),
+            'mime_type' => $file->getMimeType(),
+            'size' => $file->getSize(),
+            'extension' => $file->getClientOriginalExtension(),
+        ];
     }
 
     /**
@@ -89,8 +69,8 @@ class FileUploadService
      *
      * @return bool
      */
-    public function delete(): bool
+    public function delete(string $filePath): bool
     {
-        return Storage::disk($this->disk)->delete($this->filePath);
+        return Storage::disk($this->disk)->delete($filePath);
     }
 }

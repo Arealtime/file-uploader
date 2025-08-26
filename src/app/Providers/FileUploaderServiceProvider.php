@@ -1,6 +1,6 @@
 <?php
 
-namespace Arealtime\FileUploader\App\Providers;
+namespace Taskio\FileUploader\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,5 +1,5 @@
 {
-    "name": "arealtime/file-uploader",
+    "name": "taskio/file-uploader",
     "description": "",
     "version": "1.0.0",
     "type": "module",
@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Arealtime\\FileUploader\\App\\": "src/app/"
+            "Taskio\\FileUploader\\": "src/app/"
         }
     },
     "authors": [
@@ -27,17 +27,17 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "homepage": "https://github.com/arealtime/file-uploader",
+    "homepage": "https://github.com/taskio/file-uploader",
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/arealtime/file-uploader"
+            "url": "https://github.com/taskio/file-uploader"
         }
     ],
     "extra": {
         "laravel": {
             "providers": [
-                "Arealtime\\FileUploader\\App\\Providers\\FileUploaderServiceProvider"
+                "Taskio\\FileUploader\\Providers\\FileUploaderServiceProvider"
             ]
         }
     }
